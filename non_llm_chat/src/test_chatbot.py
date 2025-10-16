@@ -19,22 +19,22 @@ def test_chatbot():
         "Thank you",
         "Goodbye"
     ]
-    
+
     print("\n" + "="*50)
     print("CHATBOT TEST RESULTS")
     print("="*50)
-    
+
     for message in test_messages:
         response = chatbot.get_response(message)
         print(f"\nUser: {message}")
         print(f"Bot:  {response}")
         print("-" * 40)
-    
+
     # Test stats
     print(f"\nUser: show stats")
     stats_response = chatbot.get_response("show stats")
     print(f"Bot:  {stats_response}")
-    
+
     print("\n" + "="*50)
     print("TEST COMPLETED SUCCESSFULLY!")
     print("="*50)
