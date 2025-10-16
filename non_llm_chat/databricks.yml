@@ -1,0 +1,35 @@
+# This is a Databricks asset bundle definition for non_llm_chat.
+# See https://docs.databricks.com/dev-tools/bundles/index.html for documentation.
+bundle:
+  name: non_llm_chat
+  uuid: 17bcdaaa-9164-498a-b70f-18cd726d9404
+
+artifacts:
+  python_artifact:
+    type: whl
+    build: uv build --wheel
+
+include:
+  - resources/*.yml
+  - resources/*/*.yml
+
+targets:
+  dev:
+    # The default target uses 'mode: development' to create a development copy.
+    # - Deployed resources get prefixed with '[dev my_user_name]'
+    # - Any job schedules and triggers are paused by default.
+    # See also https://docs.databricks.com/dev-tools/bundles/deployment-modes.html.
+    mode: development
+    default: true
+    workspace:
+      host: https://dbc-e8b24c98-d535.cloud.databricks.com
+
+  prod:
+    mode: production
+    workspace:
+      host: https://dbc-e8b24c98-d535.cloud.databricks.com
+      # We explicitly deploy to /Workspace/Users/alan.dennis@ucumberlands.edu to make sure we only have a single copy.
+      root_path: /Workspace/Users/alan.dennis@ucumberlands.edu/.bundle/${bundle.name}/${bundle.target}
+    permissions:
+      - user_name: alan.dennis@ucumberlands.edu
+        level: CAN_MANAGE

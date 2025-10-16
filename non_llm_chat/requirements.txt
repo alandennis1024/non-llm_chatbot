@@ -1,0 +1,4 @@
+# Compatible versions that work together
+gradio>=4.0.0,<6.0.0
+# No longer using ChatterBot due to compatibility issues
+# Using custom pattern-matching chatbot instead

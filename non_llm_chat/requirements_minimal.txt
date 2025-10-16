@@ -1,0 +1,2 @@
+# Minimal requirements for the simple chatbot
+gradio==4.44.0
