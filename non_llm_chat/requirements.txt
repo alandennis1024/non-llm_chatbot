@@ -1,4 +1,13 @@
-# Compatible versions that work together
-gradio>=4.0.0,<6.0.0
-# No longer using ChatterBot due to compatibility issues
-# Using custom pattern-matching chatbot instead
+# Flask web framework
+Flask>=2.0.0,<3.0.0
+Werkzeug>=2.0.0,<3.0.0
+
+# ChatterBot and dependencies
+ChatterBot>=1.0.0
+chatterbot-corpus>=1.2.0
+SQLAlchemy>=1.4.0,<2.0.0
+PyYAML>=5.4.0
+
+# Additional dependencies
+python-dateutil>=2.8.0
+pytz>=2021.1

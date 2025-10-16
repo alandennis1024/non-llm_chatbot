@@ -3,6 +3,16 @@ name = "non_llm_chat"
 version = "0.0.1"
 authors = [{ name = "alan.dennis@ucumberlands.edu" }]
 requires-python = ">= 3.11"
+dependencies = [
+    "Flask>=2.0.0,<3.0.0",
+    "Werkzeug>=2.0.0,<3.0.0",
+    "ChatterBot>=1.0.0",
+    "chatterbot-corpus>=1.2.0",
+    "SQLAlchemy>=1.4.0,<2.0.0",
+    "PyYAML>=5.4.0",
+    "python-dateutil>=2.8.0",
+    "pytz>=2021.1"
+]
 
 [project.optional-dependencies]
 dev = [
@@ -39,3 +49,4 @@ packages = ["src/non_llm_chat"]
 
 [project.scripts]
 main = "non_llm_chat.main:main"
+databricks-main = "non_llm_chat.main:databricks_main"

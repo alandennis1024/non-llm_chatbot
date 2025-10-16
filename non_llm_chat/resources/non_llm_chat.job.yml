@@ -15,18 +15,29 @@ resources:
       #    - your_email@example.com
 
       tasks:
-        # - task_key: notebook_task
-        #   notebook_task:
-        #     notebook_path: ../src/notebook.ipynb
-
-        # - task_key: main_task
-        #   depends_on:
-        #     - task_key: notebook_task
-
-        #   environment_key: default
-        #   python_wheel_task:
-        #     package_name: non_llm_chat
-        #     entry_point: main
+        - task_key: chatbot_web_app
+          python_wheel_task:
+            package_name: non_llm_chat
+            entry_point: databricks_main
+          
+          environment_key: default
+          
+          libraries:
+            - requirements: ../requirements.txt
+            
+        - task_key: chatbot_training_task
+          depends_on:
+            - task_key: chatbot_web_app
+          
+          python_wheel_task:
+            package_name: non_llm_chat
+            entry_point: main
+            parameters: ["--mode", "train", "--bot-name", "ProductionBot"]
+          
+          environment_key: default
+          
+          libraries:
+            - requirements: ../requirements.txt
 
       # A list of task execution environment specifications that can be referenced by tasks of this job.
       environments:
@@ -35,6 +46,5 @@ resources:
           # Full documentation of this spec can be found at:
           # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
           spec:
-            client: "2"
             dependencies:
               - ../dist/*.whl

@@ -1,0 +1,112 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Run Non-LLM Chatbot Web App",
+			"type": "shell",
+			"command": "python",
+			"args": [
+				"-m",
+				"non_llm_chat.main",
+				"--mode",
+				"web",
+				"--debug"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			}
+		},
+		{
+			"label": "Run Non-LLM Chatbot CLI",
+			"type": "shell",
+			"command": "python",
+			"args": ["-m", "non_llm_chat.main", "--mode", "cli"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": true,
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Train Chatbot",
+			"type": "shell",
+			"command": "python",
+			"args": ["-m", "non_llm_chat.main", "--mode", "train", "--bot-name", "DevBot"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Run Demo",
+			"type": "shell",
+			"command": "python",
+			"args": ["demo.py"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Build Python Wheel",
+			"type": "shell",
+			"command": "uv",
+			"args": ["build", "--wheel"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": []
+		},
+		{
+			"label": "Deploy Databricks Bundle",
+			"type": "shell",
+			"command": "databricks",
+			"args": ["bundle", "deploy"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": [],
+			"dependsOn": "Build Python Wheel"
+		},
+		{
+			"label": "Run Databricks Job",
+			"type": "shell",
+			"command": "databricks",
+			"args": ["bundle", "run", "non_llm_chat_job"],
+			"group": "build",
+			"presentation": {
+				"echo": true,
+				"reveal": "always",
+				"focus": false,
+				"panel": "new"
+			},
+			"problemMatcher": [],
+			"dependsOn": "Deploy Databricks Bundle"
+		}
+	]
+}
