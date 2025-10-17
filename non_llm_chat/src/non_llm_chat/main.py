@@ -9,12 +9,12 @@ import logging
 import sys
 import os
 from typing import Optional
-
 # Add the current directory to Python path for imports
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
+#sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
-from .flask_app import ChatBotFlaskApp
-from .chatbot import BasicChatBot, ChatBotManager
+from flask_app import ChatBotFlaskApp
+from chatbot import BasicChatBot, ChatBotManager
+
 
 
 def setup_logging(log_level: str = "INFO"):

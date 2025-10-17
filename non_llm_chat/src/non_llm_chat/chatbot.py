@@ -10,7 +10,8 @@ from chatterbot.logic import BestMatch
 import logging
 import os
 from typing import List, Optional
-
+import time 
+time.clock = time.time
 
 class BasicChatBot:
     """
@@ -34,7 +35,7 @@ class BasicChatBot:
         # Configure logging
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        
+        self.logger.info("Initializing BasicChatBot ...")
         # Initialize the chatbot
         self.bot = ChatBot(
             name,
@@ -54,8 +55,9 @@ class BasicChatBot:
                 }
             ]
         )
-        
+        self.logger.info("Creating ChatterBotCorpusTrainer")
         self.trainer = ChatterBotCorpusTrainer(self.bot)
+        self.logger.info("Creating ListTrainer")
         self.list_trainer = ListTrainer(self.bot)
         
         self.logger.info(f"Chatbot '{name}' initialized successfully")
@@ -84,6 +86,8 @@ class BasicChatBot:
         """
         try:
             self.logger.info("Training chatbot with custom conversations")
+            import nltk
+            nltk.download("punkt_tab")
             self.list_trainer.train(conversations)
             self.logger.info("Custom training completed successfully")
         except Exception as e:
@@ -153,6 +157,7 @@ class ChatBotManager:
         """Initialize the chatbot manager."""
         self.bots = {}
         self.logger = logging.getLogger(__name__)
+        self.logger.info("ChatBotManager initialized")
     
     def create_bot(self, name: str, database_path: Optional[str] = None) -> BasicChatBot:
         """
@@ -165,10 +170,12 @@ class ChatBotManager:
         Returns:
             BasicChatBot instance
         """
+        self.logger.info("Enter create_bot")
         if database_path is None:
             database_path = f"{name.lower()}_db.sqlite3"
-        
+        self.logger.info(f"Creating bot '{name}' with database at '{database_path}'")
         bot = BasicChatBot(name, database_path)
+        self.logger.info(f"Created bot '{name}'")
         self.bots[name] = bot
         self.logger.info(f"Created chatbot: {name}")
         return bot

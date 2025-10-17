@@ -1,50 +1,54 @@
 # The main job for non_llm_chat.
 resources:
-  jobs:
-    non_llm_chat_job:
-      name: non_llm_chat_job
+  apps:
+    non_llm_chat:
+      name: chatbot-web-app
+      description: "A simple chatbot web application using Flask and ChatterBot."
+      #default_source_code_path: "/Workspace/Users/alan.dennis@ucumberlands.edu/.bundle/${bundle.name}/${bundle.target}/files/"
+      source_code_path: "/Workspace/Users/alan.dennis@ucumberlands.edu/.bundle/${bundle.name}/${bundle.target}/files/"
+  # jobs:
+  #   non_llm_chat_job:
+  #     name: non_llm_chat_job
 
-      trigger:
-        # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
-        periodic:
-          interval: 1
-          unit: DAYS
+  #     trigger:
+  #       # Run this job every day, exactly one day from the last run; see https://docs.databricks.com/api/workspace/jobs/create#trigger
+  #       periodic:
+  #         interval: 1
+  #         unit: DAYS
 
-      #email_notifications:
-      #  on_failure:
-      #    - your_email@example.com
+  #     #email_notifications:
+  #     #  on_failure:
+  #     #    - your_email@example.com
 
-      tasks:
-        - task_key: chatbot_web_app
-          python_wheel_task:
-            package_name: non_llm_chat
-            entry_point: databricks_main
+  #     tasks:
+  #       - task_key: chatbot_web_app
+  #         python_wheel_task:
+  #           package_name: non_llm_chat
+  #           entry_point: databricks_main
           
-          environment_key: default
+  #         environment_key: default
           
-          libraries:
-            - requirements: ../requirements.txt
+  #         # libraries:
+  #         #   - requirements: ../requirements.txt
             
-        - task_key: chatbot_training_task
-          depends_on:
-            - task_key: chatbot_web_app
+  #       - task_key: chatbot_training_task
+  #         depends_on:
+  #           - task_key: chatbot_web_app
           
-          python_wheel_task:
-            package_name: non_llm_chat
-            entry_point: main
-            parameters: ["--mode", "train", "--bot-name", "ProductionBot"]
+  #         python_wheel_task:
+  #           package_name: non_llm_chat
+  #           entry_point: main
+  #           parameters: ["--mode", "train", "--bot-name", "ProductionBot"]
           
-          environment_key: default
+  #         environment_key: default
           
-          libraries:
-            - requirements: ../requirements.txt
+          
 
-      # A list of task execution environment specifications that can be referenced by tasks of this job.
-      environments:
-        - environment_key: default
-
-          # Full documentation of this spec can be found at:
-          # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
-          spec:
-            dependencies:
-              - ../dist/*.whl
+      # # A list of task execution environment specifications that can be referenced by tasks of this job.
+      # environments:
+      #   - environment_key: default
+      #     # Full documentation of this spec can be found at:
+      #     # https://docs.databricks.com/api/workspace/jobs/create#environments-spec
+      #     spec:
+      #       dependencies:
+      #         - ../dist/*.whl

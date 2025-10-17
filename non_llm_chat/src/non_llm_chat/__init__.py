@@ -10,7 +10,7 @@ from .flask_app import ChatBotFlaskApp, create_app
 from .main import main, databricks_main
 
 __version__ = "0.0.1"
-__author__ = "alan.dennis@ucumberlands.edu"
+__author__ = "alan.dennis@gmail.com"
 
 __all__ = [
     "BasicChatBot",

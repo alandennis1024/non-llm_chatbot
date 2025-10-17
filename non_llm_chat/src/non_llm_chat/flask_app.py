@@ -4,10 +4,13 @@ Provides REST API endpoints for chatbot interaction.
 """
 
 from flask import Flask, request, jsonify, render_template_string
-from .chatbot import BasicChatBot, ChatBotManager
+from chatbot import BasicChatBot, ChatBotManager
 import logging
+import sys
 import os
 from typing import Dict, Any
+
+sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 
 
 class ChatBotFlaskApp:
@@ -30,17 +33,18 @@ class ChatBotFlaskApp:
         # Configure logging
         logging.basicConfig(level=logging.INFO)
         self.logger = logging.getLogger(__name__)
-        
+        self.logger.info("Creating bot manager")
         # Initialize chatbot manager
         self.bot_manager = ChatBotManager()
-        
+        self.logger.info("Bot manager created")
         # Create default chatbot
         self.default_bot = self.bot_manager.create_bot("DefaultBot")
+        self.logger.info("Created default bot")
         self.default_bot.train_basic_conversations()
-        
+        self.logger.info("Default bot trained with basic conversations")
         # Set up routes
         self._setup_routes()
-        
+        self.logger.info("Set up routes")
         self.logger.info("Flask chatbot application initialized")
     
     def _setup_routes(self):
@@ -407,5 +411,5 @@ def create_app() -> Flask:
     Returns:
         Flask application instance
     """
-    chatbot_app = ChatBotFlaskApp()
+    chatbot_app = ChatBotFlaskApp(debug=True)
     return chatbot_app.get_app()

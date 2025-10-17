@@ -1,0 +1,1 @@
+command: ["python","src/non_llm_chat/main.py"] 

@@ -4,10 +4,10 @@ bundle:
   name: non_llm_chat
   uuid: 17bcdaaa-9164-498a-b70f-18cd726d9404
 
-artifacts:
-  python_artifact:
-    type: whl
-    build: uv build --wheel
+# artifacts:
+#   python_artifact:
+#     type: whl
+#     build: uv build --wheel
 
 include:
   - resources/*.yml
@@ -33,3 +33,5 @@ targets:
     permissions:
       - user_name: alan.dennis@ucumberlands.edu
         level: CAN_MANAGE
+
+# command: ["python","src/main.py"]
